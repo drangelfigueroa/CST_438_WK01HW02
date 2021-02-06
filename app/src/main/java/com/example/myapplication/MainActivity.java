@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
                 passwordField = passwordEditText.getText().toString();
 
                 if(verify(usernameField, passwordField)){
-                    Toast.makeText(getApplicationContext(), "id" + user.getUserId(), Toast.LENGTH_SHORT).show();
                     Intent intent = LandingActivity.intentFactory(getApplicationContext(), user.getUserId());
                     startActivity(intent);
                 }
@@ -70,12 +69,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean verify(String username, String password){
         user = appDAO.getUserByUsername(username);
         if(user == null) {
+            usernameEditText.setSelectAllOnFocus(true);
             usernameEditText.requestFocus();
+            usernameEditText.setSelectAllOnFocus(false);
             Toast.makeText(getApplicationContext(), "Username not recognized", Toast.LENGTH_SHORT).show();
             return false;
         }
         if(!user.getPassword().equals(password)) {
+            passwordEditText.setSelectAllOnFocus(true);
             passwordEditText.requestFocus();
+            passwordEditText.setSelectAllOnFocus(false);
             Toast.makeText(getApplicationContext(), "Invalid password", Toast.LENGTH_SHORT).show();
             return false;
         }
